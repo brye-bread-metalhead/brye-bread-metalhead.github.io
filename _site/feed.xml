@@ -1,17 +1,84 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-30T09:43:25-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Welcome to rosepetals.net</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/jekyll/update/2023/12/26/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2023-12-26T21:34:03-06:00</published><updated>2023-12-26T21:34:03-06:00</updated><id>http://localhost:4000/jekyll/update/2023/12/26/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2023/12/26/welcome-to-jekyll.html">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-30T11:53:54-06:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Welcome to rosepetals.net</title><subtitle>rosepetals.net - a blog about databases and homelabbing</subtitle><entry><title type="html">Mikrotik SFP+ Woes</title><link href="http://localhost:4000/homelab/2023/12/30/Mikrotik-CRS326-Intel-x520-DA2.html" rel="alternate" type="text/html" title="Mikrotik SFP+ Woes" /><published>2023-12-30T10:00:00-06:00</published><updated>2023-12-30T10:00:00-06:00</updated><id>http://localhost:4000/homelab/2023/12/30/Mikrotik-CRS326-Intel-x520-DA2</id><content type="html" xml:base="http://localhost:4000/homelab/2023/12/30/Mikrotik-CRS326-Intel-x520-DA2.html">&lt;p&gt;Upgrading my homelab to a 10G fiber connection to the router was an interesting experience. Hopefully this information will help to troubleshoot a 10G fiber network and save you some time.&lt;/p&gt;
 
-&lt;p&gt;Jekyll requires blog post files to be named according to the following format:&lt;/p&gt;
+&lt;p&gt;tl;dr:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YEAR-MONTH-DAY-title.MARKUP&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Using ifconfig -vvvv in pfsense should show that your NIC and SFP are detected&lt;/li&gt;
+  &lt;li&gt;Ensure the SFP is detected by the switch with Winbox&lt;/li&gt;
+  &lt;li&gt;⚠️ Make sure your Mikrotik switch is on firmware 6.49.10&lt;/li&gt;
+  &lt;li&gt;Set the SFP to 10G mode and turn off auto-negotiate on the Mikrotik&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;Where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YEAR&lt;/code&gt; is a four-digit number, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MONTH&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DAY&lt;/code&gt; are both two-digit numbers, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MARKUP&lt;/code&gt; is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+&lt;p&gt;In my homelab, my router is a Poweredge server with pfsense installed. It only has 2 integrated gigabit NICs. I plan to use a dual-WAN failover with my network, I need more than 2 NICs in total. My core switch, a Mikrotik CRS326, also happens to support SFP+.&lt;/p&gt;
 
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+&lt;p&gt;What could this mean? A reason to upgrade to fiber!&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;Tom&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints &apos;Hi, Tom&apos; to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;p&gt;In the past I had already done some research previously on which NIC to purchase. In my case it was the Intel x520-DA2. It’s reasonbly power-efficient, fast enough for my network, and known to be very compatible. I recalled reading about SFP compatibility problems with this NIC, so I purchased some Intel 10G LC SFPs to tag along and avoid issues with a third party SFP.&lt;/p&gt;
 
-&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.</summary></entry></feed>
+&lt;hr /&gt;
+
+&lt;p&gt;The hardware I’m working with to get a 10G backbone from the core switch to my router:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://ark.intel.com/content/www/us/en/ark/products/39776/intel-ethernet-converged-network-adapter-x520-da2.html&quot;&gt;Intel x520-DA2 Dual SFP+ NIC&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;2x Intel &lt;a href=&quot;https://www.intel.com/content/dam/doc/product-brief/ethernet-sfp-optics-brief.pdf&quot;&gt;E10GSFPSR&lt;/a&gt; (FLTX8571D3BCV-IT)
+    &lt;ul&gt;
+      &lt;li&gt;One for the switch, one for the NIC&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://mikrotik.com/product/CRS326-24G-2SplusRM&quot;&gt;Mikrotik CRS326-24G-2S&lt;/a&gt; (using RouterOS)&lt;/li&gt;
+  &lt;li&gt;OM4 LC/LC MMF fiber (1M)
+    &lt;ul&gt;
+      &lt;li&gt;What a mouthful! Basically a short multimode fiber cable with LC-style plugs&lt;/li&gt;
+      &lt;li&gt;OM4 being rated for much more than 10G&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I installed the NIC into my router rack and powered it up. I slotted the SFPs into both the switch and the fiber NIC. Hoping for the best, but expecting the worst, I flipped on my switch and made sure that PFSense booted up normally. Connect up the cable, then… nothing! The SFP LEDs were dead. Time to troubleshoot.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;First thing is first, do some research to make sure someone else hasn’t had the problem.&lt;/p&gt;
+
+&lt;p&gt;Generally speaking, I found on the Mikrotik forums that this problem (with this exact SFP) isn’t uncommon. There was some discussion about SFP compatibility, both versions of firmware (6.x and 7.x) having problems, and so on. Nothing positive, other than a Mikrotik SFP is the only SFP that Mikrotik seems to test with RouterOS. A couple users mentioned that they were able to get the SFP working with a particular build of the 7.x firmware, but I am reluctant to upgrade to a new major firmware version on my core switch.&lt;/p&gt;
+
+&lt;p&gt;Checking PFSense after reading forum discussion, the SFP and NIC status can be queried through the diagnostics &amp;gt; command prompt. There are many posts in the Reddit homelab community in regards to the X520-DA2 being perfectly compatible with PFSense, so I didn’t spend a lot of time researching if there was a problem with this particular NIC and pfsense.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;On PFSense, SFP temperature and signal presence found through the RX and TX values show that the SFP can see a signal, and is detected by both the NIC and PFsense. The good news here is that PFSense can at least see the hardware and a signal. I didn’t capture the text in the bad state, but the information displayed here is similar. If your setup is in the problem state, you would see something like ‘no carrier’ in teh status line.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ix1: flags=8843&amp;lt;UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST&amp;gt; metric 0 mtu 1500
+	description: LAN
+	options=e138bb&amp;lt;RXCSUM,TXCSUM,VLAN_MTU,VLAN_HWTAGGING,JUMBO_MTU,VLAN_HWCSUM,WOL_UCAST,WOL_MCAST,WOL_MAGIC,VLAN_HWFILTER,RXCSUM_IPV6,TXCSUM_IPV6&amp;gt;
+	ether xx:xx:xx:xx:xx:xx
+	inet6 xxx:xxx:xxx:xxx:xxx:xxx:xxx:xxx prefixlen 64 scopeid 0x2
+	inet6 xxx::x:xxx prefixlen 64 scopeid 0x2
+	inet6 xxx:xxx:xxx:xxx:xxx:xxx:xxx:xxx prefixlen 64
+	inet xxx.xxx.xxx.xxx netmask 0xffffff00 broadcast xxx.xxx.xxx.xxx
+	media: Ethernet autoselect (10Gbase-SR &amp;lt;full-duplex,rxpause,txpause&amp;gt;)
+	status: active
+	nd6 options=21&amp;lt;PERFORMNUD,AUTO_LINKLOCAL&amp;gt;
+	plugged: SFP/SFP+/SFP28 10G Base-SR (LC)
+	vendor: Intel Corp PN: FTLX8571D3BCV-IT SN: AM411QD DATE: 2012-01-29
+	module temperature: 36.13 C Voltage: 3.31 Volts
+	RX: 0.55 mW (-2.52 dBm) TX: 0.61 mW (-2.14 dBm)
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Onto the Mikrotik, I looked into the SFP status with Winbox. I found similar values, where the Mikrotik could see a signal and the SFP temperature.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/mikrotik-crs326-sfp-status.png&quot; alt=&quot;Screenshot of Mikrotik SFP Winbox status&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Even though the SFP and signal are detected, there wasn’t communication occurring between the two devices. I found some Mikrotik forum posts that were mentioning that a manual set of the network mode (e.g. 1G, 10G) worked around some problems. I used Winbox to configure the data rate to 1G and turned off auto-negotiate. Interestingly, on the older firmware the SFP worked! When set to the 1G mode I was able to configure the VLANs and they were pingable between the devices. This wasn’t running at the desired 10G rate, but at least it was proof there wasn’t a hardware failure.&lt;/p&gt;
+
+&lt;p&gt;It was at this point that I wasn’t able to get much further. I re-read many of the Mikortik blog posts and I continued to turn up no new results or information. Browsing other information online I wasn’t able to get any solid confirmations that the SFPs I had purchased were at all compatible with the Mikrotik router. Mikrotik themselves only certify their own (expensive) SFPs with their devices, and it would be disappointing to need to purchase more hardware.&lt;/p&gt;
+
+&lt;p&gt;As a last ditch effort, the risks seemed lower to upgrade the switch firmware to the latest minor version in the 6.x family. Reading the &lt;a href=&quot;https://mikrotik.com/download/changelogs/long-term-release-tree&quot;&gt;release notes&lt;/a&gt;, I didn’t see any specific updates related to the SFP I was using, nor any specific changes to my switch so there weren’t any proof-positive changes about my hardware configuration. It’s worth upgrading anyway, for the other fixes listed. Hopefully upgrading the minor version means lower risks for things breaking.&lt;/p&gt;
+
+&lt;p&gt;Upgrading to the 6.4.10 was a simple matter of dropping the firmware file onto the router’s filesystem root location and rebooting. A few minutes later… it’s alive! 10G is working and both the router and pfsense report a 10G link. More importantly, the only outage I experienced in the lab (which also serves production my hosted services) was during the switch upgrade. No panicked late-night work this time.&lt;/p&gt;
+
+&lt;p&gt;Thanks for reading, and keep on learning.&lt;/p&gt;
+
+&lt;p&gt;Brian&lt;/p&gt;</content><author><name></name></author><category term="Homelab" /><summary type="html">Upgrading my homelab to a 10G fiber connection to the router was an interesting experience. Hopefully this information will help to troubleshoot a 10G fiber network and save you some time.</summary></entry></feed>
